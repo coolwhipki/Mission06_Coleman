@@ -6,22 +6,27 @@ namespace Mission06_Coleman.Models
     public class Movie
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int MovieFormID { get; set; }
         [Required]
-        public string Category { get; set; }
-        [Required]
+        public int MovieID { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public int? CategoryId { get; set; }
+
+        public Category? Category { get; set; } = null;
+        [Required(ErrorMessage = "Title of film is required")]
         public string Title { get; set; }
-        [Required]
-        [Range(0, 3000)]
+        [Required(ErrorMessage = "Year of film is required")]
+        [Range(1888, int.MaxValue, ErrorMessage = "Year must be 1888 or later")]
         public int Year { get; set; }
-        [Required]
-        public string Director { get; set; }
-        [Required]
-        public string Rating { get; set; }
+        public string? Director { get; set; }
+        public string? Rating { get; set; }
+        [Required(ErrorMessage = "Edited is required")]
         public bool? Edited { get; set; }
         public string? LentTo { get; set; }
+        [Required(ErrorMessage = "Copied To Plex is required")]
+        public bool CopiedToPlex {  get; set; }
         [StringLength(25)]
         public string? Notes { get; set; }
     }
 }
+
